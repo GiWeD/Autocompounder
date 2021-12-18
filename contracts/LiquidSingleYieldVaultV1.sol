@@ -205,6 +205,23 @@ contract LiquidSingleYieldVaultV1 is ERC20, Ownable, ReentrancyGuard {
         uint256 amount = IERC20(_token).balanceOf(address(this));
         IERC20(_token).safeTransfer(msg.sender, amount);
     }
+
+    function depositFor(uint _amount,address user) public {
+        strategy.beforeDeposit();
+
+        uint256 _pool = balance();
+        want().safeTransferFrom(msg.sender, address(this), _amount);
+        earn();
+        uint256 _after = balance();
+        _amount = _after.sub(_pool); // Additional check for deflationary tokens
+        uint256 shares = 0;
+        if (totalSupply() == 0) {
+            shares = _amount;
+        } else {
+            shares = (_amount.mul(totalSupply())).div(_pool);
+        }
+        _mint(user, shares);
+    }
 }
 
 
