@@ -196,7 +196,7 @@ contract LiquidSingleYieldVaultV1 is ERC20, Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Rescues random funds stuck that the strat can't handle.
+     * @dev Rescues random funds stuck that the strat cant handle.
      * @param _token address of the token to rescue.
      */
     function inCaseTokensGetStuck(address _token) external onlyOwner {
