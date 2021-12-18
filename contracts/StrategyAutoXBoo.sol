@@ -15,7 +15,7 @@ import "./interfaces/IXPool.sol";
 import "./interfaces/IUniswapV2Pair.sol";
 import "./interfaces/IUniswapRouterETH.sol";
 
-contract StrategyXBoo is StrategyManager, StrategyFeeManager {
+contract StrategyAutoXBoo is StrategyManager, StrategyFeeManager {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 

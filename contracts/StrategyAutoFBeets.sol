@@ -14,7 +14,7 @@ import "./interfaces/IBeethovenxChef.sol";
 import "./interfaces/IBar.sol";
 
 
-contract StrategyFBEETS is StrategyManager, StrategyFeeManager {
+contract StrategyAutoFBEETS is StrategyManager, StrategyFeeManager {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 

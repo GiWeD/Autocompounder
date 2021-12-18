@@ -38,7 +38,7 @@ describe("----------------------------------------\n----------------------------
         
         wantContract = new ethers.Contract(tokens.want, erc20Abi, owner)
         // deploy
-        data = await ethers.getContractFactory("StrategyXBoo");
+        data = await ethers.getContractFactory("StrategyAutoXBoo");
         chefPoolId = 2
         chef = ethers.utils.getAddress("0x2352b745561e7e6fcd03c093ce7220e3e126ace0") 
 
@@ -472,7 +472,7 @@ describe("Upgrade Strategy", function () {
     
     it("Should propose a new strategy", async function () {
         // deploy
-        data = await ethers.getContractFactory("StrategyXBoo");
+        data = await ethers.getContractFactory("StrategyAutoXBoo");
         newStrategyContract = await data.deploy(tokens.want, tokens.bar, chefPoolId, chef, tokens.zero,unirouter,owner.address,outputToNativeRoute, outputToWantRoute);
         txDeployed = await newStrategyContract.deployed();
 

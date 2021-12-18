@@ -14,7 +14,7 @@ import "./interfaces/ILinSpiritChef.sol";
 import "./interfaces/IUniswapRouterETH.sol";
 
 
-contract StrategyLinSpirit is StrategyManager, StrategyFeeManager {
+contract StrategyAutoLinSpirit is StrategyManager, StrategyFeeManager {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 

@@ -43,7 +43,7 @@ describe("----------------------------------------\n----------------------------
         
         wantContract = new ethers.Contract(tokens.want, erc20Abi, owner)
         // deploy
-        data = await ethers.getContractFactory("StrategyFBEETS");
+        data = await ethers.getContractFactory("StrategyAutoFBEETS");
         chefPoolId = 22
         wantPoolId = "0xcde5a11a4acb4ee4c805352cec57e236bdbc3837000200000000000000000019"
         nativeSwapPoolId = "0xcde5a11a4acb4ee4c805352cec57e236bdbc3837000200000000000000000019"
@@ -461,7 +461,7 @@ describe("Upgrade Strategy", function () {
     
     it("Should propose a new strategy", async function () {
         // deploy
-        data = await ethers.getContractFactory("StrategyFBEETS");
+        data = await ethers.getContractFactory("StrategyAutoFBEETS");
         newStrategyContract = await data.deploy(chefPoolId, wantPoolId, nativeSwapPoolId, unirouter);
         // check owner
         expect(await newStrategyContract.owner()).to.equal(owner.address);
