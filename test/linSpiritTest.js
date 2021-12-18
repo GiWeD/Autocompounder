@@ -9,7 +9,7 @@ const { erc20Abi } = require("../Abi.js");  //spiritContract = new ethers.Contra
 
 const harvester = ethers.utils.getAddress("0xa65DD8C7d05fDd80Eb30Bd38841F2fa9d5EF07D5")
 const impersonator = [  ethers.utils.getAddress("0x582faeb9a8e10f5efad9a3faadd3ec91f6d55551"),
-                        ethers.utils.getAddress("0xd47ea88f7bda42b354d8143de9f271f3e95c3cbb"),
+                        ethers.utils.getAddress("0x5b9f5b08ff0f2bab05b6f52a45febee9fa2cf6d7"),
                         ethers.utils.getAddress("0x2d1bdc590cb736097bc5577c8974e28dc48f5ecc"),
                         ethers.utils.getAddress("0xc2ef686df8e84d0136c646e372a0cfdf72747658")]
                     

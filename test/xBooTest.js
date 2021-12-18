@@ -10,7 +10,7 @@ const harvester = ethers.utils.getAddress("0xa65DD8C7d05fDd80Eb30Bd38841F2fa9d5E
 const impersonator = [  ethers.utils.getAddress("0x95478c4f7d22d1048f46100001c2c69d2ba57380"),
                         ethers.utils.getAddress("0xf778f4d7a14a8cb73d5261f9c61970ef4e7d7842"),
                         ethers.utils.getAddress("0x1f0c5a9046f0db0e8b651cd9e8e23ba4efe4b86d"),
-                        ethers.utils.getAddress("0xc3bc542805110bb7d1c90b10ac2f94f180bc7f19")]
+                        ethers.utils.getAddress("0xf778f4d7a14a8cb73d5261f9c61970ef4e7d7842")]
                     
 const tokens = {
     want:       ethers.utils.getAddress("0x841fad6eae12c286d1fd18d1d525dffa75c7effe"),  // boo
