@@ -1,1 +1,1 @@
-# Autocompounder
+# LinSpirit Autocompounder
