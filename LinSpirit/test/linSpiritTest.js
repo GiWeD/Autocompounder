@@ -8,10 +8,10 @@ const { erc20Abi } = require("../Abi.js");  //spiritContract = new ethers.Contra
 
 
 const harvester = ethers.utils.getAddress("0xa65DD8C7d05fDd80Eb30Bd38841F2fa9d5EF07D5")
-const impersonator = [  ethers.utils.getAddress("0x582faeb9a8e10f5efad9a3faadd3ec91f6d55551"),
-                        ethers.utils.getAddress("0x5b9f5b08ff0f2bab05b6f52a45febee9fa2cf6d7"),
+const impersonator = [  ethers.utils.getAddress("0xc2ef686df8e84d0136c646e372a0cfdf72747658"),
+                        ethers.utils.getAddress("0xf8519302749ff98990e9627d0c23ff28b757e2b3"),
                         ethers.utils.getAddress("0x2d1bdc590cb736097bc5577c8974e28dc48f5ecc"),
-                        ethers.utils.getAddress("0xc2ef686df8e84d0136c646e372a0cfdf72747658")]
+                        ethers.utils.getAddress("0x5b9f5b08ff0f2bab05b6f52a45febee9fa2cf6d7")]
                     
 const tokens = {
     want:       ethers.utils.getAddress("0xc5713B6a0F26bf0fdC1c52B90cd184D950be515C"),      // linspirit    
