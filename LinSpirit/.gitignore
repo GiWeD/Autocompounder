@@ -9,4 +9,5 @@ cache
 artifacts
 secrets.js
 linSpiritArgs.js
+VaultArgs.js
 deploy.js
