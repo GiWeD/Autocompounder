@@ -1,4 +1,4 @@
-FBeets
+
 node_modules
 .env
 coverage
@@ -9,6 +9,3 @@ typechain
 cache
 artifacts
 secrets.js
-linSpiritArgs.js
-VaultArgs.js
-deploy.js

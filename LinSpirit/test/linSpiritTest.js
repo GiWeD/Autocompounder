@@ -87,10 +87,10 @@ describe("----------------------------------------\n----------------------------
 
 describe("Vault for LinSpiritStrategy: deployment and settings", function () {
 
-    it("Should Deploy LiquidSingleYieldVaultV1: check owner", async function () {
+    it("Should Deploy LiquidAutoVaultV1: check owner", async function () {
 
         // deploy
-        data = await ethers.getContractFactory("LiquidSingleYieldVaultV1");
+        data = await ethers.getContractFactory("LiquidAutoVaultV1");
         vaultContract = await data.deploy(strategyContract.address, tokenName, tokenSymbol , approvalDelay);
         txDeployed = await vaultContract.deployed();
         // check owner
