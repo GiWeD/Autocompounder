@@ -1,7 +1,5 @@
 {
   "name": "hardhat-project",
-
-
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-etherscan": "^2.1.7",
@@ -21,5 +19,11 @@
     "solhint": "^3.3.6",
     "solidity-coverage": "^0.7.17",
     "web3": "^1.6.0"
+  },
+  "description": "",
+  "version": "1.0.0",
+  "main": "Abi.js",
+  "directories": {
+    "test": "test"
   }
 }

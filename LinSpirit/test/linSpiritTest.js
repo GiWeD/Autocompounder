@@ -11,12 +11,12 @@ const harvester = ethers.utils.getAddress("0xa65DD8C7d05fDd80Eb30Bd38841F2fa9d5E
 const impersonator = [  ethers.utils.getAddress("0xc2ef686df8e84d0136c646e372a0cfdf72747658"),
                         ethers.utils.getAddress("0xf8519302749ff98990e9627d0c23ff28b757e2b3"),
                         ethers.utils.getAddress("0x2d1bdc590cb736097bc5577c8974e28dc48f5ecc"),
-                        ethers.utils.getAddress("0x5b9f5b08ff0f2bab05b6f52a45febee9fa2cf6d7")]
+                        ethers.utils.getAddress("0x26a52b826e19f833debb6d9f35b144ed0578a23a")]
                     
 const tokens = {
     want:       ethers.utils.getAddress("0xc5713B6a0F26bf0fdC1c52B90cd184D950be515C"),      // linspirit    
-    output:     ethers.utils.getAddress("0x5Cc61A78F164885776AA610fb0FE1257df78E59B"),    // spirit
-    wrapped:    ethers.utils.getAddress("0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"),  // wFtm
+    output:     ethers.utils.getAddress("0x5Cc61A78F164885776AA610fb0FE1257df78E59B"),      // spirit
+    wrapped:    ethers.utils.getAddress("0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"),      // wFtm
     zero:       ethers.utils.getAddress("0x0000000000000000000000000000000000000000"),
 }
 
@@ -25,8 +25,6 @@ const unirouter = ethers.utils.getAddress("0x20dd72ed959b6147912c2e529f0a0c651c3
 const approvalDelay = 86400 //day
 const tokenSymbol = "LD-LinSpirit"
 const tokenName = "liquidLinSpirit"
-
-
 
 
 describe("----------------------------------------\n----------------------------------------\n" + 
@@ -70,11 +68,6 @@ describe("----------------------------------------\n----------------------------
         expect(await strategyContract.harvesters(harvester)).to.equal(false)
     });
 
-    it("Should Set CallFeeRecipient", async function () {
-        await strategyContract.setCallFeeRecipient(callFeeRecipient.address)
-        expect(await strategyContract.callFeeRecipient()).to.equal(callFeeRecipient.address)
-    });
-
     it("Should Set liquidFeeAddress", async function () {
         await strategyContract.setLiquidFeeAddress(liquidFee.address)
         expect(await strategyContract.liquidFeeAddress()).to.equal(liquidFee.address)
@@ -92,7 +85,7 @@ describe("----------------------------------------\n----------------------------
 
 });
 
-describe("Vault for LinSpiritStrategy: deployment and dettings", function () {
+describe("Vault for LinSpiritStrategy: deployment and settings", function () {
 
     it("Should Deploy LiquidSingleYieldVaultV1: check owner", async function () {
 
@@ -207,7 +200,7 @@ describe("User Interaction", function () {
 
     });
 
-    it("Should Harvest and have fees", async function () { 
+    it("Should Harvest fees", async function () { 
 
         //move blocks 1day
         const evmTime = 86400;
@@ -219,7 +212,6 @@ describe("User Interaction", function () {
         //console.log((Number(rewards)/1e18).toString())
         wFtmContract = new ethers.Contract(tokens.wrapped, erc20Abi, owner)
         balanceOwnerBeforeHarvest = await wFtmContract.balanceOf(liquidFee.address)
-        balanceCallFeeBeforeHarvest = await wFtmContract.balanceOf(callFeeRecipient.address)
 
         await strategyContract.connect(owner).harvest()
 
@@ -227,11 +219,10 @@ describe("User Interaction", function () {
 
         strategyBalance = await strategyContract.balanceOf() 
         balanceOwnerAfterHarvest = await wFtmContract.balanceOf(liquidFee.address)
-        balanceCallFeeAfterHarvest = await wFtmContract.balanceOf(callFeeRecipient.address)
+
         //console.log((balanceCallFeeAfterHarvest/1e18).toString())
         //console.log((balanceOwnerAfterHarvest/1e18).toString())
         expect(balanceOwnerAfterHarvest).to.be.above(balanceOwnerBeforeHarvest)
-        expect(balanceCallFeeAfterHarvest).to.be.above(balanceCallFeeBeforeHarvest)
         
         
     });
@@ -279,12 +270,15 @@ describe("User Interaction", function () {
             params: [userToTest],
         });
         signer = await ethers.getSigner(userToTest)
+        
         user3Balance = await wantContract.balanceOf(signer.address) 
+
         await wantContract.connect(signer).approve(vaultContract.address, user3Balance)
         await vaultContract.connect(signer).depositAll()
 
         expect(await wantContract.balanceOf(signer.address)).to.equal(0)
         expect(await strategyContract.balanceOf()).to.be.above(strategyBalance)
+
         strategyBalance = await strategyContract.balanceOf() 
 
         expect(await vaultContract.getPricePerFullShare()).to.be.above(pricePerShare)
@@ -302,12 +296,17 @@ describe("User Interaction", function () {
             params: [userToTest],
         });
         signer = await ethers.getSigner(userToTest)
+
+        
         toWithdraw = await vaultContract.balanceOf(userToTest)
+
         await vaultContract.connect(signer).withdraw(toWithdraw)
 
         expect(Number(await wantContract.balanceOf(signer.address))).to.greaterThanOrEqual(Number(user3Balance))
         expect(await strategyContract.balanceOf()).to.be.below(strategyBalance)
+
         strategyBalance = await strategyContract.balanceOf() 
+
         await hre.network.provider.request({
             method: "hardhat_stopImpersonatingAccount",
             params: [userToTest],
@@ -325,7 +324,9 @@ describe("User Interaction", function () {
 
         expect(Number(await wantContract.balanceOf(signer.address))).to.greaterThanOrEqual(Number(user0Balance))
         expect(await strategyContract.balanceOf()).to.be.below(strategyBalance)
+
         strategyBalance = await strategyContract.balanceOf() 
+
         await hre.network.provider.request({
             method: "hardhat_stopImpersonatingAccount",
             params: [userToTest],
@@ -337,7 +338,7 @@ describe("User Interaction", function () {
 describe("Security", function () {
 
     
-    it("Should Pause the contract and stop deposit+harvest", async function () {
+    it("Should Pause the strategy and stop deposit+harvest", async function () {
         await strategyContract.pause()
         // deposit should fail
         userToTest = impersonator[0]
@@ -360,7 +361,7 @@ describe("Security", function () {
 
     });
 
-    it("Should UnPause the contract and allow deposit+withdraw", async function () {
+    it("Should UnPause the strategy and allow deposit+withdraw", async function () {
 
         await strategyContract.unpause()
         userToTest = impersonator[3] 

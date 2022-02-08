@@ -11,7 +11,6 @@ contract StrategyManager is Ownable, Pausable {
     address public liquidFeeAddress;
     address public harvester;
     address public governance;
-    address public callFeeRecipient;
     address public unirouter;
 
     mapping (address => bool) public harvesters;
@@ -51,11 +50,6 @@ contract StrategyManager is Ownable, Pausable {
         governance = _governance;
     }
     
-    function setCallFeeRecipient(address _callFeeRecipient) external onlyManager {
-        require(_callFeeRecipient != address(0), 'zeroAddress');
-        callFeeRecipient = _callFeeRecipient;
-    }
-
     function setLiquidFeeAddress(address _liquidFeeAddress) external onlyManager {
         require(_liquidFeeAddress != address(0), 'zeroAddress');
         liquidFeeAddress = _liquidFeeAddress;

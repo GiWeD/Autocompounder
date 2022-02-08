@@ -122,6 +122,7 @@ contract StrategyAutoLinSpirit is StrategyManager, StrategyFeeManager {
 
     // compounds earnings and charges performance fee
     function _harvest() internal whenNotPaused onlyWhitelisted {
+        
         ILinSpiritChef(chef).harvest(chefPoolId, address(this));
         uint256 outputBal = IERC20(output).balanceOf(address(this));
         if (outputBal > 0) {
@@ -152,11 +153,7 @@ contract StrategyAutoLinSpirit is StrategyManager, StrategyFeeManager {
             wrappedBal = wrappedBal.mul(PLATFORM_FEE).div(MAX_FEE);
         }
         
-        uint256 callFeeAmount = wrappedBal.mul(CALL_FEE).div(MAX_FEE); 
-        IERC20(wrapped).safeTransfer(callFeeRecipient, callFeeAmount);
-
-        uint256 liquidFeeAmount = wrappedBal.mul(FEE_BATCH).div(MAX_FEE);
-        IERC20(wrapped).safeTransfer(liquidFeeAddress, liquidFeeAmount);
+        IERC20(wrapped).safeTransfer(liquidFeeAddress, wrappedBal);
 
     }
 
@@ -200,16 +197,11 @@ contract StrategyAutoLinSpirit is StrategyManager, StrategyFeeManager {
             spiritSwap(outputBal, routeOutputWrapped);
             wrappedOut = IERC20(wrapped).balanceOf(address(this));
         }
-        return wrappedOut.mul(PLATFORM_FEE).div(1000).mul(CALL_FEE).div(MAX_FEE);
+        return wrappedOut.mul(PLATFORM_FEE).div(MAX_FEE);
     }
 
     function setHarvestOnDeposit(bool _harvestOnDeposit) external onlyManager {
         harvestOnDeposit = _harvestOnDeposit;
-        if (harvestOnDeposit) {
-            WITHDRAW_FEE = 0;
-        } else {
-            WITHDRAW_FEE = 100;
-        }
     }
 
     // called as part of strat migration. Sends all the available funds back to the vault.

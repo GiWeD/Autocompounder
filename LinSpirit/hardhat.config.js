@@ -4,7 +4,7 @@ require('@openzeppelin/hardhat-upgrades');
 
 require("@nomiclabs/hardhat-etherscan");
 
-const { apiFtm, accounts } = require("./secrets.js"); 
+//const { apiFtm, account } = require("./secrets.js"); 
 
 module.exports = {
   // latest Solidity version
@@ -30,21 +30,21 @@ module.exports = {
       chainId: 0xfa2,
       gas: 2100000,
       gasPrice: 8000000000,
-      accounts
+      //accounts: account
     },
 
 
     // fantomOpera network specification
     fantomOpera: {
-      url: `https://rpc.ftm.tools`,
+      url: `https://rpcapi.fantom.network`,
       chainId: 250,
-      accounts
+      //accounts
     },
 
 
     hardhat: {
       forking: {
-          url: "https://rpc.ftm.tools", // command line:  npx hardhat node --fork https://rpcapi.fantom.network,
+          url: " https://rpcapi.fantom.network", // command line:  npx hardhat node --fork https://rpcapi.fantom.network,
       },
       //accounts: []
     }
@@ -55,7 +55,7 @@ module.exports = {
   etherscan: {
     // Your API key for Etherscan
     // Obtain one at https://etherscan.io/
-    apiKey: apiFtm
+    //apiKey 
   }
 
   

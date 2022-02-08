@@ -106,8 +106,8 @@ contract LiquidSingleYieldVaultV1 is ERC20, Ownable, ReentrancyGuard {
      */
     function deposit(uint _amount) public nonReentrant {
         strategy.beforeDeposit();
-
         uint256 _pool = balance();
+
         want().safeTransferFrom(msg.sender, address(this), _amount);
         earn();
         uint256 _after = balance();
@@ -206,7 +206,11 @@ contract LiquidSingleYieldVaultV1 is ERC20, Ownable, ReentrancyGuard {
         IERC20(_token).safeTransfer(msg.sender, amount);
     }
 
+
+
+
     
+     
 }
 
 
